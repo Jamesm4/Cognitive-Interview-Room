@@ -5,3 +5,8 @@ temp/
 coverage
 .env
 npm-debug.log
+.tmp/
+__MACOSX
+public/
+.DS_Store
+package-lock.json
