@@ -1,0 +1,9 @@
+applications:
+- path: .
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: <enter_name_here>
+  host: <enter_same as above_name_here>
+  disk_quota: 1024M
+  command: npm start

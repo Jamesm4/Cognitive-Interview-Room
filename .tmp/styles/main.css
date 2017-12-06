@@ -1,0 +1,1559 @@
+/* Copyright IBM Corp. 2015
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*Start Bootstrap*/
+html {
+    font-size: 10px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    font-family: "Helvetica Neue for IBM-Roman";
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+
+:after, :before {
+    box-sizing: border-box;
+}
+
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.navbar-fixed-top {
+    top: 0;
+    border-width: 0 0 1px;
+}
+
+.navbar-fixed-bottom, .navbar-fixed-top {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    /* box-sizing: border-box; */
+}
+
+.btn-group-vertical>.btn-group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+    display: table;
+    content: " ";
+}
+
+.btn-group-vertical>.btn-group:after, .btn-toolbar:after, .clearfix:after, .container-fluid:after, .container:after, .dl-horizontal dd:after, .form-horizontal .form-group:after, .modal-footer:after, .nav:after, .navbar-collapse:after, .navbar-header:after, .navbar:after, .pager:after, .panel-body:after, .row:after {
+    clear: both;
+}
+
+.col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+    height: 0;
+    box-sizing: content-box;
+}
+
+a {
+    font-family: "Helvetica Neue for IBM-Bold";
+    color: #734098;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+table {
+    background-color: transparent;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 0;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+}
+
+input {
+    visibility: hidden;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+.h3, h3 {
+    font-size: 24px;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+/*End Bootstrap*/
+/*@font-face {
+  font-family: 'Helvetica Neue for IBM-Light';
+  src: url('../fonts/light/h-n-light.eot?') format('eot'), url('../fonts/light/h-n-light.woff2') format('woff2'), url('../fonts/light/h-n-light.woff') format('woff'), url('../fonts/light/h-n-light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Helvetica Neue for IBM-LightItalic';
+  src: url('../fonts/light-italic/h-n-light-italic.eot?') format('eot'), url('../fonts/light-italic/h-n-light-italic.woff2') format('woff2'), url('../fonts/light-italic/h-n-light-italic.woff') format('woff'), url('../fonts/light-italic/h-n-light-italic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic; }*/
+
+@font-face {
+  font-family: 'Helvetica Neue for IBM-Roman';
+  src: url('../fonts/roman/h-n-roman.eot?') format('eot'), url('../fonts/roman/h-n-roman.woff2') format('woff2'), url('../fonts/roman/h-n-roman.woff') format('woff'), url('../fonts/roman/h-n-roman.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal; }
+
+/*@font-face {
+  font-family: 'Helvetica Neue for IBM-RomanItalic';
+  src: url('../fonts/roman-italic/h-n-roman-italic.eot?') format('eot'), url('../fonts/roman-italic/h-n-roman-italic.woff2') format('woff2'), url('../fonts/roman-italic/h-n-roman-italic.woff') format('woff'), url('../fonts/roman-italic/h-n-roman-italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic; }*/
+
+/*@font-face {
+  font-family: 'Helvetica Neue for IBM-Medium';
+  src: url('../fonts/medium/h-n-medium.eot?') format('eot'), url('../fonts/medium/h-n-medium.woff2') format('woff2'), url('../fonts/medium/h-n-medium.woff') format('woff'), url('../fonts/medium/h-n-medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Helvetica Neue for IBM-MediumItalic';
+  src: url('../fonts/medium-italic/h-n-medium-italic.eot?') format('eot'), url('../fonts/medium-italic/h-n-medium-italic.woff2') format('woff2'), url('../fonts/medium-italic/h-n-medium-italic.woff') format('woff'), url('../fonts/medium-italic/h-n-medium-italic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic; }*/
+
+@font-face {
+  font-family: 'Helvetica Neue for IBM-Bold';
+  src: url('../fonts/bold/h-n-bold.eot?') format('eot'), url('../fonts/bold/h-n-bold.woff2') format('woff2'), url('../fonts/bold/h-n-bold.woff') format('woff'), url('../fonts/bold/h-n-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal; }
+
+/*@font-face {
+  font-family: 'Helvetica Neue for IBM-BoldItalic';
+  src: url('../fonts/bold-italic/h-n-bold-italic.eot?') format('eot'), url('../fonts/bold-italic/h-n-bold-italic.woff2') format('woff2'), url('../fonts/bold-italic/h-n-bold-italic.woff') format('woff'), url('../fonts/bold-italic/h-n-bold-italic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic; }*/
+
+
+.dialog-body {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: #323232;
+    transition: background-image 1s ease-in-out;
+}
+
+.dialog-body-running {
+    background: none;
+}
+
+html, body {
+    height: 100%;
+    min-height: 100%;
+    border: 0px;
+    margin: 0px;
+    overflow-y: hidden;
+}
+
+.ng-view {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 35px;
+}
+
+
+.dialog-header-intro .dialog-navbar-txt-img {
+    background-image: url("../images/Header_web_home.svg");
+    width: 424px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35px;
+    cursor: pointer;
+}
+
+
+.dialog-header-chatting .dialog-header-inner, .dialog-header-preview .dialog-header-inner {
+    background-color: #562F72;
+    height: 3em;
+}
+
+.dialog-header-chatting .dialog-navbar-txt-img, .dialog-header-preview .dialog-navbar-txt-img {
+    background-image: url("../images/Header_web_chat.svg");
+    width: 234px;
+    height: 55px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+/*Text for chatting top header*/
+.dialog-navbar-txt{
+      font-family: "Helvetica Neue for IBM-Bold";
+      color: white;
+      font-size: 145%;
+      padding-top: 1%;
+      padding-bottom: 2%;
+      position: fixed;
+      float: left;
+}
+.dialog-header-inner {
+    min-height: 35px;
+}
+
+.dialog-header-intro .dialog-no-favorite-left {
+    display: none;
+}
+
+.dialog-header-intro, .dialog-header-chatting, .dialog-header-preview {
+    padding-right: 0px;
+    padding-left: 0px;
+    color: #252525;
+}
+
+.dialog-rating-spacing {
+    margin-bottom:35px;
+}
+.dialog-review-star {
+    vertical-align: initial;
+    height: 12px;
+}
+
+.dialog-header-text {
+    text-align: center;
+}
+
+.navbar {
+    height: 35px;
+    border: 0px;
+}
+
+/*Links on footer chatting page*/
+.dialog-link {
+  padding-top: 8px;
+  font-family: "Helvetica Neue for IBM-Roman";
+  font-size: 10.86px;
+  color: rgba(0,0,0,0.55);
+  letter-spacing: 0px;
+  padding-right: .5vw;
+
+}
+
+.footer-container{
+    min-width:320px;
+    max-width:640px;
+    margin:auto;
+}
+
+.links-container{
+  display:inline-block;
+  margin-top:10px;
+}
+
+
+.dialog-collapse-text-toggle {
+    font-family: "Helvetica Neue for IBM-Roman";
+    font-size: 16px;
+}
+
+.dialog-movie-overview {
+    font-family: "Helvetica Neue for IBM-Roman";
+    font-size: 16px;
+}
+
+.dialog-links-parent-chatting {
+
+    height: 3.2em;
+    background-color:  #f3f3f3;
+    position: fixed;
+    color: inherit;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    text-align: left;
+    display: block;
+}
+
+.dialog-entry .dialog-white-bg {
+    background-color: #FFFFFF;
+    display: inline;
+}
+
+.RnR-answers .answer-container .answers h1:nth-child(1){
+  letter-spacing: .2px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  color: #5F2788;
+  font-size: 16px;
+  font-family: "Helvetica Neue for IBM-Bold";
+}
+
+.dialog-watson-row .dialog-segment-bkg .dialog-row-text h1{
+  margin-top: 2px;
+  margin-bottom: 5px;
+  color: #5F2788;
+  font-size: 20px;
+  font-family: "Helvetica Neue for IBM-Bold";
+
+}
+
+.dialog-mct-option {
+    margin-top: 10px;
+    margin-left: 6px;
+    padding-top: 11px;
+    padding-bottom: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-family: "Helvetica Neue for IBM-Roman";
+    vertical-align: middle;
+    text-align: center;
+    min-width: 75px;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    color: #252525;
+    line-height: 20px;
+    display: inline-block;
+}
+
+.dialog-mct-option:hover {
+    border-color: #00abfc;
+    /*color: #00abfc;*/
+}
+
+
+/*
+ * Form controls
+ */
+.dialog-form-input-container {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.footer-intro {
+    display: block;
+    vertical-align: middle;
+    background-color: #FFFFFF;
+    padding-bottom: 75px;
+}
+
+
+.footer-intro .form-group .dialog-form-input {
+    resize: none;
+    border-color: #FFFFFF;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-bottom: 1px solid;
+    font-size: 20px;
+    font-family: "Helvetica Neue for IBM-Roman";
+}
+
+.dialog-resize-col {
+    display: none;
+}
+
+.footer-chatting, .footer-preview {
+    background-color: #FFFFFF;
+    position: absolute;
+    bottom: 0;
+    /* Set the fixed height of the footer here */
+    width: 100%;
+}
+
+.dialog-form-input:after {
+    content: "";
+    display: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.dialog-body-intro .dialog-form-input {
+    background-color: transparent;
+    color: black;
+}
+
+.dialog-small-screen-placeholder-chatting, .dialog-small-screen-placeholder-preview {
+    display: none;
+}
+
+.dialog-body-intro {
+    display: table;
+}
+
+.dialog-intro-text-image, .dialog-intro-image {
+    height: 28px;
+    width: auto;
+    padding-right: 5px;
+}
+
+.dialog-intro-image {
+    padding-right: 0px;
+    height: 21px;
+}
+
+.dialog-intro-text-intro {
+    text-align: center;
+}
+
+.dialog-intro-text-chatting, .dialog-intro-text-preview {
+    display: none;
+}
+
+.dialog-intro-text-chatting, .dialog-intro-text-preview {
+    color: white;
+    padding: 15px;
+    padding-top: 25px;
+}
+
+.dialog-happy-text-chatting, .dialog-happy-text-preview, .dialog-placeholder-chatting, .dialog-placeholder-preview {
+    display: none;
+}
+
+.dialog-placeholder-intro, .dialog-happy-text-intro {
+    color: #FFFFFF;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    font-family: "Helvetica Neue for IBM-Roman";
+    font-size: 24px;
+}
+
+.dialog-placeholder-intro {
+    font-weight: bold;
+}
+
+.dialog-input-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.dialog-button-col {
+    width: 75px;
+    padding-left: 10px;
+    display: none;
+}
+
+.footer-intro .dialog-button-col {
+    display: table-cell;
+}
+
+.dialog-button {
+    height: 35px;
+    width: 100%;
+    padding-bottom: 2px;
+    border: solid 2px #00D6C3;
+    color: #00D6C3;
+    background-color: transparent;
+}
+
+.dialog-button:hover, .dialog-button:focus {
+    color: #000000;
+    background-color: #00D6C3;
+}
+
+
+/*PLACEHOLDER Color change*/
+
+
+.dialog-body-chatting ::-webkit-input-placeholder { /* WebKit browsers */
+    color: #C7C7C7;
+    font-style: italic;
+}
+
+.dialog-body-chatting :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #C7C7C7;
+    font-style: italic;
+}
+
+.dialog-body-chatting ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #C7C7C7;
+    font-style: italic;
+}
+
+.dialog-body-chatting :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #C7C7C7;
+    font-style: italic;
+}
+
+.dialog-body-preview ::-webkit-input-placeholder { /* WebKit browsers */
+    color: #C7C7C7;
+    font-style: italic;
+}
+
+.dialog-body-preview :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #C7C7C7;
+    font-style: italic;
+}
+
+.dialog-body-preview ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #C7C7C7;
+    font-style: italic;
+}
+
+.dialog-body-preview :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #C7C7C7;
+    font-style: italic;
+}
+
+.dialog-body-intro ::-webkit-input-placeholder { /* WebKit browsers */
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+.dialog-body-intro :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+.dialog-body-intro ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+.dialog-body-intro :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+
+/*
+ * End form controls
+ */
+
+
+.dialog-container-chatting {
+    height: 100%;
+}
+
+.dialog-center {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.dialog-center-chatting {
+    top: 30px !important;
+}
+/*chat bubble bottom right triangle */
+.dialog-user-row .dialog-row-text:after, .dialog-user-row .dialog-row-text:before{
+      content: '';
+      position: absolute;
+    }
+
+.dialog-user-row .dialog-row-text:before {
+       z-index: -2;
+       bottom: -0.75rem;
+       right: 0;
+       height: .75rem;
+       width: 1rem;
+       background: #DFE0DF;
+    }
+
+.dialog-user-row .dialog-row-text:after {
+      z-index: -1;
+      bottom: -1rem;
+      right: 0;
+      height: 1rem;
+      width: 1rem;
+      background: #fff;
+      border-top-right-radius: 1.25rem;
+    }
+
+.container .dialog-response .dialog-hidden {
+    display: none;
+}
+
+.dialog-segment-bkg, .ng-enter .dialog-segment-bkg {
+    height: 55px;
+    display: table;
+    width: 100%;
+}
+
+.dialog-user-row, .dialog-user-row.ng-enter.ng-enter-active {
+    margin-left:auto;
+}
+
+
+
+.dialog-user-row .dialog-white-bg .dialog-row-text {
+    padding-right: 5px;
+    padding-top:5px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    max-width: 558px;
+    margin-left: auto;
+}
+
+.dialog-user-row.ng-enter, .dialog-watson-row.ng-enter {
+    bottom: -50px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.container .watson-thinking.dialog-watson-row:before {
+    content: none;
+}
+
+ .dialog-watson-row .dialog-row-text:before {
+    content: " ";
+    position: absolute;
+    height: 17px;
+    display: inline-block;
+    left: 0px;
+    margin-top: 3px;
+    background-color:#9A61CC;
+    border-radius: 2em;
+    width: 4px;
+}
+
+.watson-thinking {
+    background-image: url("../images/watson_black_animate.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100%;
+    height: 55px;
+}
+
+.dialog-watson-row.watson-thinking {
+    border-right-width: 0px;
+}
+
+.dialog-entries {
+    margin-bottom: 10px;
+}
+
+.dialog-trailer {
+    width: 100%;
+    height: 250px;
+}
+
+.dialog-trailer-hidden {
+    display: none !important;
+}
+
+.dialog-preview-parent {
+    display: block;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    background: rgba(48, 48, 48, 0.97);
+    color: #ECECEC;
+    z-index: 3000; /*has to be a huge number to overlay header*/
+    transition: all .5s ease-in-out;
+    visibility: visible;
+}
+
+.dialog-preview-parent.ng-enter, .dialog-preview-parent.ng-leave-active {
+    width: 0px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dialog-preview-scroll {
+    overflow-y: auto;
+}
+
+
+.dialog-scrollable-div {
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    top: 35px;
+    bottom: 60px;
+    padding-top: 15px;
+}
+
+.dialog-conversation-cell {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.container.dialog-preview-showing {
+    transition-property: width, display, margin-left, margin-right;
+    -webkit-transition-property: width, display, margin-left, margin-right;
+    transition-duration: .5s;
+    -webkit-transition-duration: .5s;
+    transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+}
+
+.dialog-body-intro, .dialog-body-chatting, .dialog-body-preview {
+    height: 100%;
+    width: 100%;
+    min-height: 100%;
+}
+
+.dialog-body-intro {
+    background-color: #FFFFFF;
+}
+
+.dialog-body-chatting, .dialog-body-preview {
+    margin-top: 35px;
+    margin-bottom: 60px;
+    padding-top: 10px;
+}
+
+.dialog-body-intro .container {
+    width: 310px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dialog-iheader {
+    margin-top: 35px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dialog-ifooter {
+    margin-bottom: 20px;
+    text-align: center;
+    padding-bottom: 75px;
+}
+
+.dialog-nextbtn {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    cursor: pointer;
+}
+
+.dialog-welcome {
+    margin-top: 100px;
+    margin-bottom: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 28px;
+    font-family: "Helvetica Neue for IBM-Roman";
+}
+
+
+/*
+@media ( min-height : 280px) {
+	.footer-intro {
+	    padding-top: 45px;
+	}
+}
+@media ( min-height : 350px) {
+	.footer-intro {
+	    padding-top: 125px;
+	}
+}
+@media ( min-height : 650px) {
+	.footer-intro {
+	    padding-top: 175px;
+	}
+}
+@media ( min-height : 768px) {
+	.footer-intro {
+	    padding-top: 200px;
+	}
+}
+@media ( min-height : 850px) {
+	.footer-intro {
+	    padding-top: 275px;
+	}
+}
+*/
+
+
+
+.RnR-answers{
+ max-width: 558px;
+
+
+}
+.answers{
+  margin-bottom: 25px;
+  font-size: 16px;
+  color: #323232;
+  letter-spacing: 0.35px;
+  line-height: 21px;
+  font-family: "Helvetica Neue for IBM-Roman";
+
+}
+
+.buttonRnR{
+  display:table;
+  margin-top: 10px;
+  font-family: "Helvetica Neue for IBM-Roman";
+  font-size: 14px;
+  color: #9A61CC;
+  letter-spacing: .23px;
+  cursor: pointer;
+  border: 1px solid #9A61CC;
+  border-radius: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  vertical-align: middle;
+}
+
+
+.navbar-howto{
+  width: 4em;
+  padding-top: 2.8%;
+  padding-bottom: 1%;
+  font-family: "Helvetica Neue for IBM-Bold";
+  cursor: pointer;
+  color: #BA8FF7;
+  font-size: 112%;
+  float: right;
+}
+
+.header-container{
+  margin: auto;
+  width: 95%;
+  max-width: 640px;
+  min-width: 320px;
+}
+
+.navbar-about{
+  padding-top: 2.8%;
+  padding-bottom: 1%;
+  float: right;
+  font-family: "Helvetica Neue for IBM-Bold";
+  cursor: pointer;
+  color: #BA8FF7;
+  font-size: 112%;
+  padding-right: 20px;
+
+}
+
+.modal-button{
+  width: 20px;
+  display: table;
+  margin: 10px;
+  font-family: "Helvetica Neue for IBM-Roman";
+  font-size: 13px;
+  color: #BA8FF7;
+  letter-spacing: 0.28px;
+
+
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 80px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow-y: scroll; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    max-width: 640px;
+    width: 80%;
+    height: 80%;
+}
+
+/* Hide first header in modal body */
+.modal-body h1:nth-child(1){
+  display: none;
+}
+.modal-body p {
+  font-family: "Helvetica Neue for IBM-Roman";
+  font-size: 16px;
+  letter-spacing: .3px;
+  line-height: 1.4em;
+  padding: 20px 20px 5px 20px;
+}
+
+.modal-body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: white;
+  width: 100%;
+  height: inherit;
+}
+
+/* The Close Button */
+.close {
+    color: #EEEEEE;
+    float: right;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.modal-header h2 {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.modal-header {
+    font-family: "Helvetica Neue for IBM-Roman";
+    font-size: 25px;
+    color: #FBFBFB;
+    background-color: #562F72;
+    letter-spacing: 0.44px;
+    padding: .5em 20px;
+    display: block;
+}
+
+
+.answer-container{
+  padding-left: 30px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  position: relative;
+
+}
+
+.firstAnswer{
+    padding-top: 12px;
+    border-top: 1px solid #C9C9C9;
+}
+
+.myBtn{
+  padding-bottom: 12px;
+  border-bottom: 1px solid #C9C9C9;
+  cursor: pointer;
+  font-size: 13px;
+  color: #BA8FF7;
+  letter-spacing: 0.28px;
+  line-height: 21px;
+}
+
+.dialog-user-row .dialog-white-bg .dialog-row-text, .dialog-user-row .dialog-row-text {
+  max-width: 558px;
+  position: relative;
+  color: #323232;
+  letter-spacing: 0.015rem;
+  border-radius: 2.25rem;
+  text-align: center;
+  border-bottom-right-radius: 0;
+  display: table;
+  margin-left: auto;
+  min-width: 6rem;
+  font-size: 15px;
+  background-color: #DFE0DF;
+  font-family: "Helvetica Neue for IBM-Roman";
+}
+
+/* size of bubbles */
+.dialog-user-row .dialog-white-bg .dialog-row-text, .dialog-user-row .dialog-row-text {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width:558px;
+    margin-top: 12px;
+    margin-bottom:12px;
+    margin-left:auto;
+}
+
+.dialog-row-text {
+  display: table-cell;
+  padding-right: 10px;
+  padding-left: 10px;
+  vertical-align: middle;
+}
+
+.example-question {
+    color:#562F72;
+    margin-left:3%;
+    cursor: pointer;
+}
+
+.feedback-button {
+  background-color:#9A61CC;
+  color:white;
+  font-size:14px;
+  margin:5px;
+  margin-bottom:20px;
+  padding-right:12px;
+  padding-left:12px;
+ }
+
+
+
+/************************************************************************/
+/************************************************************************/
+/************************************************************************/
+/************************************************************************/
+/************************************************************************/
+/******************* RESPONSIVE WEB & MEDIA QUERIES *********************/
+/************************************************************************/
+/************************************************************************/
+/************************************************************************/
+/************************************************************************/
+/************************************************************************/
+
+/* rules for mobile & tablet */
+@media (min-width: 300px) and (max-width: 635px) {
+  .dialog-header-inner {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .footer-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (min-width: 300px) {
+
+    .dialog-header-chatting .dialog-header-inner, .dialog-header-preview .dialog-header-inner {
+        height: 3.5em;
+    }
+    .dialog-welcome {
+        width: 250px;
+        margin-top: 50px;
+        margin-bottom: 40px;
+    }
+    .row {
+        margin-right: -30px;
+        margin-left: -30px;
+    }
+
+    .dialog-rating-label {
+        position: absolute;
+        right: -8px;
+        top: 19px;
+    }
+    h3 {
+        font-size: 20px;
+    }
+
+    .dialog-user-row, .dialog-user-row.ng-enter.ng-enter-active {
+        background-color: transparent;
+        margin-left: auto;
+    }
+    /*
+    .container .dialog-watson-row:before {
+        left: 0px;
+        height: 35px;
+        width: 35px;
+        top: 10px;
+        border-radius: 50%;
+    }
+    */
+    .container .dialog-user-row:after {
+        right: 0px;
+        height: 35px;
+        top: 10px;
+        border-radius: 50%;
+    }
+
+    .dialog-mct-option {
+        min-width: 70px;
+    }
+    .dialog-favorite-full-screen-image, .dialog-favorite-full-screen-image.ng-leave {
+        height: 162px;
+        width: 137px;
+        margin-left: 15px;
+        margin-top: -10px;
+    }
+    .dialog-fullscreen-favorite-delete{
+        left: 50px;
+    }
+    .dialog-fullscreen-header{
+        height: 70px;
+    }
+    .dialog-fullscreen-header .dialog-favorite-indicator{
+        display: none;
+    }
+}
+
+.dialog-watson-row, .dialog-user-row, .dialog-watson-row.ng-enter.ng-enter-active, .dialog-user-row.ng-enter.ng-enter-active {
+    border: 0px solid #FFFFFF;
+    transition: bottom .25s;
+    bottom: 0;
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+    max-width: 558px;
+ }
+ /* watson response*/
+ .dialog-watson-row .dialog-row-text {
+     max-width: 558px;
+     padding-right: 0px;
+     padding-top: 10px;
+     padding-bottom: 10px;
+ }
+
+ @media ( min-width : 635px) {
+  .dialog-watson-row, .dialog-watson-row.ng-enter.ng-enter-active {
+      background-color: transparent;
+      padding-left: 25px;
+      max-width: 558px;
+  }
+
+
+
+	.row {
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    .dialog-header-chatting .dialog-header-inner, .dialog-header-preview .dialog-header-inner {
+        height: 50px;
+    }
+    .dialog-iheader {
+        background-image: url("../images/Header_web_home.svg");
+        background-size: 459px;
+        background-repeat: no-repeat;
+        width: 447px;
+        height: 100px;
+    }
+    .dialog-nextbtn {
+        background-image: url("../images/Next_web.svg");
+        width: 109px;
+        height: 55px;
+    }
+    .dialog-header-intro .dialog-navbar-txt-img {
+        background-image: url("../images/Header_web_home.svg");
+        background-size: 459px;
+        background-repeat: no-repeat;
+        width: 447px;
+        height: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 35px;
+        cursor: pointer;
+    }
+    .dialog-header-preview .dialog-navbar-txt-img, .dialog-header-chatting .dialog-navbar-txt-img {
+        background-image: url("../images/Header_web_chat.svg");
+        width: 243px;
+        height: 55px;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+    .dialog-line-separator {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: 75px;
+        margin-right: 75px;
+        border-color: #d1d4d6;
+    }
+    .dialog-body-intro .container {
+        width: 75%;
+    }
+    .dialog-intro-text-image {
+        height: 36px;
+    }
+    .dialog-intro-image {
+        height: 27px;
+    }
+    .container {
+        margin-right: auto;
+        margin-left: auto;
+        width: 550px;
+    }
+    .container .dialog-user-row:after {
+        height: 55px;
+        top: 0px;
+    }
+
+
+  .dialog-watson-row .dialog-row-text {
+      max-width: 558px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+    .dialog-watson-row, .dialog-watson-row.ng-enter.ng-enter-active {
+        padding-left: 8px;
+    }
+    .dialog-user-row, .dialog-user-row.ng-enter.ng-enter-active {
+
+    }
+    .dialog-no-favorite-left, .dialog-favorite-left {
+        height: 60px;
+    }
+ }
+
+
+
+ @media ( min-width : 635px) {
+    .dialog-form-group-intro {
+        width: 532px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .dialog-body-running {
+        background: none;
+    }
+    .dialog-body-chatting, .dialog-body-preview {
+        font-size: 14px;
+    }
+    .container {
+        margin-right: auto;
+        margin-left: auto;
+        width: 600px;
+    }
+    .dialog-body-preview .container {
+        margin-left: 15px;
+        width: 385px;
+    }
+    .navbar {
+        height: 50px;
+    }
+    .dialog-scrollable-div {
+        top: 50px;
+    }
+    .dialog-intro-text-image {
+        padding-right: 15px;
+    }
+    .form-group .dialog-form-input {
+        height: 55px;
+        border-top: 0px;
+        border-right: 0px;
+        border-left: 0px;
+        border-bottom: 1px solid;
+    }
+    .dialog-button {
+        height: 55px;
+    }
+    .dialog-small-screen-placeholder-intro {
+        display: none;
+    }
+    .dialog-intro-text-intro {
+        margin-bottom: 40px;
+    }
+    .dialog-favorite-sm {
+        display: inline-block;;
+    }
+    .dialog-body-intro .container {
+        width: 75%;
+    }
+    .dialog-preview-parent {
+        width: 350px;
+        top: 60px;
+    }
+    .dialog-intro-image {
+        padding-right: 0px;
+    }
+    .dialog-navbar-img {
+        background-size: auto 18px;
+    }
+    .dialog-review-star-rating {
+        padding-left: 15px;
+        display: inline-block;
+    }
+    .dialog-placeholder-intro {
+        display: none;
+    }
+   }
+
+
+ @media ( min-width : 635px){
+   .dialog-body-intro .container {
+       width: 880px;
+   }
+   .dialog-body-preview .container {
+       width: 550px;
+       margin-left: 200px;
+   }
+   .container {
+       width: 100vw;
+   }
+   .dialog-intro-image, .dialog-intro-text-image {
+       height: 44px;
+       padding-right: 25px;
+   }
+   .dialog-intro-image {
+       height: 33px;
+       padding-right: 0px;
+   }
+   .dialog-preview-parent {
+       width: 450px;
+   }
+
+   .form-group .dialog-form-input {
+       resize: none;
+       padding-left: 5px;
+       box-shadow: none;
+       box-sizing: border-box;
+       height: 45px;
+       max-width: 640px;
+       margin-left: auto;
+       margin-right: auto;
+       border-radius: 0px;
+       border-color: #ABABAB;
+       position: relative;
+       font-family: "Helvetica Neue for IBM-Roman";
+       font-size: 20px;
+       color: #252525;
+       border-top: 0px;
+       border-right: 0px;
+       border-left: 0px;
+       border-bottom: 1px solid;
+   }
+   .dialog-watson-row.ng-enter {
+       max-width: 558px;
+       bottom: -10px;
+     }
+
+   .dialog-response {
+       display: table;
+       height: 100%;
+       width: 640px;
+       margin: auto;
+     }
+
+  .dialog-row-text {
+      margin-left: auto;
+      max-width: 558px;
+    }
+
+  .dialog-watson-row, .dialog-watson-row.ng-enter.ng-enter-active {
+      max-width: 558px;
+      text-align: left;
+      font-size: 16px;
+      font-family: "Helvetica Neue for IBM-Roman";
+      color: #252525;
+     }
+  }
+
+ #howtovid {
+   margin-left: 10%;
+ }
+
+ .dialog-options hr{
+  display:block;
+  margin: 1px 0;
+  visibility: hidden;
+}
+
+
+/*
+@media ( min-width : 880px) {
+    .dialog-preview-parent {
+        width: 450px;
+    }
+}
+
+*/
+
+/*
+@media ( min-width : 1300px) {
+    .dialog-preview-parent {
+        width: 550px;
+    }
+}
+
+@media ( min-width : 1530px) {
+    .dialog-body-preview .container {
+        width: 640px;
+        margin-left: 300px;
+    }
+    .dialog-preview-parent {
+        width: 600px;
+    }
+    .dialog-trailer {
+        height: 300px;
+    }
+}
+
+@media ( min-width : 1700px) {
+    .dialog-preview-parent {
+        width: 750px;
+    }
+}
+*/
+
+/*
+@media ( min-width : 374px) {
+    .dialog-review-star-rating {
+        padding-left: 10px;
+        display: inline-block;
+    }
+    h3 {
+        font-size: 24px;
+    }
+    .dialog-welcome {
+        width: 350px;
+        margin-top: 100px;
+        margin-bottom: 80px;
+    }
+    .dialog-favorite-full-screen-image, .dialog-favorite-full-screen-image.ng-leave {
+        height: 190px;
+        width: 164px;
+    }
+    .dialog-fullscreen-favorite-delete{
+        left: 65px;
+    }
+}
+*/
+
+/*
+@media ( min-width : 425px) {
+    .dialog-mct-option {
+        min-width: 75px;
+    }
+    .dialog-body-intro .container {
+        width: 400px;
+    }
+    .dialog-intro-text-image, .dialog-intro-image {
+        height: 32px;
+    }
+    .dialog-intro-image {
+        height: 24px;
+    }
+    .dialog-no-favorite-left, .dialog-favorite-left {
+        margin-left: 8%;
+    }
+}
+
+
+@media ( min-width : 470px) {
+    .dialog-welcome {
+        width: 470px;
+     }
+}
+
+*/
+
+.star {
+  background-image : url("../images/star-rating_24.svg");
+  background-size: contain;
+  height: 20px;
+  width: 20px;
+  float: right;
+}
+
+.small {
+  font-weight: lighter;
+}
+
+.modal-title {
+  padding: 10px 20px;
+}

@@ -1,0 +1,175 @@
+<!----------------------------------------------------------------------------
+   Copyright IBM Corp. 2015
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+------------------------------------------------------------------------------>
+
+<!-- CONVERSATION SCREEN-->
+<section class="dialog-response dialog-response-type-{{dialogCtrl.responseType}}">
+    <!-- content for about and how to -->
+    <script type="text/ng-template" id="about.html">
+        <p>
+            Watson Converation Service Simple ChatBox Example
+
+            <img src=“” height=“240px” width=“550px”>
+            This template is based off of the Watson Practitioner Assistant.The Practice team has been blogging the
+            progress of this project. Our hope is that the <a
+                href="https://apps.na.collabserv.com/blogs/5cf4b436-aa19-4945-b117-df68fcc81095?lang=en_us"
+                target="_blank"> blog entries </a> provide an open way to communicate the progress of the project and
+            encourage feedback from everyone. Please visit the <a
+                href="https://apps.na.collabserv.com/blogs/5cf4b436-aa19-4945-b117-df68fcc81095?lang=en_us"
+                target="_blank"> blog </a> to know more about the project progress and future plans.
+
+            <br></br>
+
+            If you are interested in the source code <a
+                href="https://github.ibm.com/watson-practice/Practitioner-Assistant" target="_blank"> fork it on
+            Github </a>
+        </p>
+    </script>
+
+    <script type="text/ng-template" id="howto.html">
+        <p>
+            <br></br>If you are having any trouble with this demo, you can contact <a
+                href="https://faces.tap.ibm.com/bluepages/profile.html?email=jocelyn.kong@ibm.com"
+                target="_blank"> Jocelyn Kong.</a>
+
+        </p>
+    </script>
+    <!-- App header, fixed position, fixed size -->
+    <header id="dialog-header" class="dialog-header-{{dialogCtrl.state.class}} navbar navbar-fixed-top">
+        <div class="dialog-header-inner">
+            <div class="header-container">
+                <div class="dialog-navbar-txt">My Virtual Assistant</div>
+                <!-- HEADER -->
+                <!-- HOW TO -->
+                <!-- Trigger/Open The Modal -->
+                <!-- <div ng-click="dialogCtrl.howToClicked = !dialogCtrl.howToClicked" class="navbar-howto">How-To</div>
+
+                 &lt;!&ndash; The Modal &ndash;&gt;
+                 <div id="myModal" ng-style="{ display: dialogCtrl.howToClicked == true ? 'block' : 'none' }"
+                      class="modal">
+                     &lt;!&ndash; Modal content &ndash;&gt;
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <div ng-click="dialogCtrl.howToClicked = dialogCtrl.closeVideo()" class="close">×</div>
+                             <h2>How To</h2>
+                         </div>
+                         <div class="modal-body">
+                             <div ng-include src="'howto.html'"></div>
+                         </div>
+                     </div>
+                 </div>
+
+                 &lt;!&ndash;ABOUT&ndash;&gt;
+                 &lt;!&ndash; Trigger/Open The Modal &ndash;&gt;
+                 <div ng-click="dialogCtrl.aboutClicked = !dialogCtrl.aboutClicked" class="navbar-about">About</div>
+
+                 &lt;!&ndash; The Modal &ndash;&gt;
+                 <div id="myModal" ng-style="{ display: dialogCtrl.aboutClicked == true ? 'block' : 'none' }"
+                      class="modal">
+                     &lt;!&ndash; Modal content &ndash;&gt;
+                     <div class="modal-content">
+                         <div class="modal-header">
+
+                             <div ng-click="dialogCtrl.aboutClicked = !dialogCtrl.aboutClicked" class="close">×</div>
+                             <h2>About</h2>
+                         </div>
+                         <div class="modal-body">
+                             <div ng-include src="'about.html'"></div>
+                         </div>
+                     </div>
+                 </div>-->
+            </div>
+        </div>
+    </header>
+
+    <div id="dialog-cell" class="dialog-conversation-cell">
+        <div id="conversationParent" class="dialog-entries col-xs-12">
+
+            <!-- Actual conversation between user and system -->
+            <div ng-animate-children class="dialog-entry row" ng-repeat="entry in dialogCtrl.conversation">
+                <!--Display user entered text -->
+                <div ng-if="entry.input" class="dialog-user-row">
+                    <div class="dialog-segment-bkg">
+                        <div class="dialog-row-text" ng-bind-html="entry.input"></div>
+                    </div>
+                </div>
+
+
+                <!--
+                Display watson response using directive. The directive takes care of adding
+                animation while the server is responding, and removing animation once response
+                is received
+                -->
+                <div ng-class="!entry.responses ? 'watson-thinking' : 'no-class'">
+                    <div class="dialog-watson-row" ng-if="entry != null && entry.responses != null">
+                        <div class="dialog-segment-bkg">
+                            <div class="dialog-row-text" ng-bind-html="entry.responses"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- If watson response is disco, return rest of answers in drop down list -->
+                <div ng-if="entry.discovery && entry.responses.length > 0" class="drop-down">
+                    <!-- If there is more than one disco response, will display button and rest of answers in a drop down list -->
+                    <div ng-if="entry.allResponses" class="buttonRnR" ng-click="entry.clicked = !entry.clicked">
+                        <span ng-show="entry.clicked">Collapse results - </span>
+                        <span ng-hide="entry.clicked">Expand to see more answers +</span></div>
+                    <div class="RnR-answers">
+                        <div ng-show="entry.clicked">
+                            <div class="answer-container" ng-repeat="entry in entry.allResponses track by $index ">
+                                <!-- Truncated text -->
+                                <div class="answers" ng-class="{firstAnswer:$first}" ng-bind-html="entry.lessAnswers">
+                                    {{entry.lessAnswers}}
+                                </div>
+                                <!-- Trigger/Open The Modal -->
+                                <div ng-click="entry.modalClicked = !entry.modalClicked" class="fullAnswerBtn">View Full
+                                    Review
+                                </div>
+
+                                <!-- The Modal -->
+                                <div id="myModal" ng-style="{ display: entry.modalClicked == true ? 'block' : 'none' }"
+                                     class="modal">
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <span ng-click="entry.modalClicked = !entry.modalClicked"
+                                                  class="close">×</span>
+                                            <h2 ng-bind-html="entry.summary"></h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="modal-title">
+                                              <table>
+                                                <tr>
+                                                  <td style="width: 80%"><h3 ng-bind-html="entry.product_name"></h3></td>
+                                                  <td><div ng-repeat="i in dialogCtrl.range(entry.rating) track by $index" class="star"></div></td>
+                                                </tr>
+                                                <tr class="small">
+                                                  <td>{{entry.helpful}} found this review helpful.</td>
+                                                  <td style="text-align: right">{{entry.review_date | date}}</td>
+                                                </tr>
+                                              </table>
+                                            </div>
+                                            <!-- Full disco answer -->
+                                            <p ng-bind-html="entry.review_text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,80 @@
+/* INTRO SCREEN ANIMATION */
+
+.fadein {
+  /* opacity: 0; */
+  animation: fadein 2.5s;
+  animation-delay: 3.5s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#typing{
+  color: black;
+  line-height: 1.2;
+  margin: 0px 0 0 0px;
+  font-family: "Helvetica Neue for IBM-Light", helvetica, sans-serif;;
+  font-size: 40pt;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 30em;
+  animation: type 4s steps(60, end);
+}
+
+#typing span {
+  color: #a85de6;
+  font-family: "Helvetica Neue for IBM-Bold";
+}
+
+#typing:nth-child(2){
+  animation: type2 4s steps(60, end);
+}
+
+#typing:nth-child(3){
+  animation: type3 6s steps(60, end);
+}
+
+@keyframes type{
+  from { width: 0; }
+}
+
+@keyframes type2{
+  0%{width: 0;}
+  50%{width: 0;}
+  100%{ width: 100; }
+}
+
+@keyframes type3{
+  0%{width: 0;}
+  50%{width: 0;}
+  100%{ width: 100; }
+}
+
+@media (min-width: 300px) and (max-width: 635px) {
+  #typing {
+    white-space: pre-line;
+    overflow: visible;
+    animation: none !important;
+    width: 95%;
+    height: auto;
+    word-wrap: break-word;
+    font-size: 10vw;
+  }
+  #introContainer {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 95%;
+  }
+
+  .dialog-body-intro .container {
+      width: 95%;
+  }
+}
