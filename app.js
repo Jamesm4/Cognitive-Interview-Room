@@ -93,6 +93,7 @@ if (process.env.VCAP_SERVICES) {
     version: 'v1'
   });
 
+  /*
   tone_analyzer = new watson.ToneAnalyzerV3({
     url: serviceCredentials.tone_analyzer[0].credentials.url || 'https://gateway.watsonplatform.net/tone-analyzer/api',
     username: serviceCredentials.tone_analyzer[0].credentials.username || '<username>',
@@ -100,6 +101,7 @@ if (process.env.VCAP_SERVICES) {
     version_date: process.env.tone_analyzer_version,
     version: 'v3'
   });
+  */
 
   /*
   discovery = new watson.DiscoveryV1({
