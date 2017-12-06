@@ -35,9 +35,9 @@
 
             },
             url: {
-                //getWCSResponse: window.location.href.split('#')[0] + 'api/message' //'http://wds-chatbot.mybluemix.net/api/message' //"http://localhost:3000/api/message"
+                //getWCSResponse: window.location.href.split('#')[0] + 'api/message' //'http://<your_app_name>.mybluemix.net/api/message' //"http://localhost:3000/api/message"
                 getWCSResponse: "http://localhost:3000/api/message"
-                //getWCSResponse: 'http://GoingToNYC.mybluemix.net/api/message'
+                //getWCSResponse: 'https://<your_app_name>.mybluemix.net/api/message'
             },
             ibmIdCookie: 'ibmid',
             usernameCookie: 'username',
