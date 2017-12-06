@@ -1,3 +1,30 @@
+# Cognitive Interview Room
+
+## Getting started
+
+The following steps are all that should be required to getting a local server running. This will eventually be hosted in CISL.
+
+1.  Set up environment
+    * Install Git Bash
+    * Install Node.js
+    * Navigate to the folder holding the `package.json` file
+    * run `npm install`
+    * run `npm install -g gulp`
+
+2.  run `gulp build && npm start`
+
+## Helpful links
+
+These are some links that could be useful during development. Feel free to add to it.
+
+* [Watson Developer Cloud](https://github.com/watson-developer-cloud/node-sdk)
+    * This is the reference for using bluemix services with node.
+
+
+# IGNORE BELOW
+
+Below is the original README. I'm leaving it there just in case.
+
 # Watson Conversation Service Chatbot Demo
 
 This demo is based off of the [Watson Practitioner Assistant] (https://github.ibm.com/watson-practice/WEX-Practitioner-Assistant)
