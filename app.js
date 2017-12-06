@@ -28,7 +28,8 @@ require('./config/express')(app);
 
 var log = console.log.bind(null, '  ');
 var conversation;
-var discovery;
+var tone_analyzer;
+// var discovery;
 var serviceCredentials;
 var intentConfidence;
 
@@ -57,12 +58,22 @@ if (process.env.VCAP_SERVICES) {
     version: 'v1'
   });
 
+  tone_analyzer = new watson.ToneAnalyzerV3({
+    url: services.tone_analyzer[0].credentials.url || 'https://gateway.watsonplatform.net/tone-analyzer/api',
+    username: services.tone_analyzer[0].credentials.username || '<username>',
+    password: services.tone_analyzer[0].credentials.password || '<password>',
+    version_date: process.env.tone_analyzer_version,
+    version: 'v3'
+  });
+
+  /*
   discovery = new watson.DiscoveryV1({
     url: services.discovery[0].credentials.url || 'https://gateway.watsonplatform.net/discovery/api',
     username: services.discovery[0].credentials.username || '<username>',
     password: services.discovery[0].credentials.password || '<password>',
     version_date: process.env.discovery_version
   });
+  */
 
   intentConfidence = process.env.intent_confidence;
 
@@ -82,12 +93,22 @@ if (process.env.VCAP_SERVICES) {
     version: 'v1'
   });
 
+  tone_analyzer = new watson.ToneAnalyzerV3({
+    url: serviceCredentials.tone_analyzer[0].credentials.url || 'https://gateway.watsonplatform.net/tone-analyzer/api',
+    username: serviceCredentials.tone_analyzer[0].credentials.username || '<username>',
+    password: services.tone_analyzer[0].credentials.password || '<password>',
+    version_date: process.env.tone_analyzer_version,
+    version: 'v3'
+  });
+
+  /*
   discovery = new watson.DiscoveryV1({
     url: serviceCredentials.discovery[0].credentials.url || 'https://gateway.watsonplatform.net/discovery/api',
     username: serviceCredentials.discovery[0].credentials.username || '<username>',
     password: serviceCredentials.discovery[0].credentials.password || '<password>',
     version_date: process.env.discovery_version
   });
+  */
 
   intentConfidence = .75;
 }
@@ -142,6 +163,10 @@ app.post('/api/message', function (req, res) {
     return deferred.promise;
 
   })().then(function (data) {
+
+    return res.json(data);
+
+    /*
     if (data.input.text !== "start conversation" && data.intents.length > 0 && data.intents[0].confidence < intentConfidence) {
       // return discovery data
       var response = {
@@ -183,6 +208,7 @@ app.post('/api/message', function (req, res) {
       // return conversation data
       return res.json(data);
     }
+    */
   });
 });
 
