@@ -10,3 +10,4 @@ __MACOSX/
 public/
 .DS_Store
 package-lock.json
+*.swp

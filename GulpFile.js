@@ -142,7 +142,7 @@
   gulp.task('dist', gulpSequence('clean', 'build'));
 
   gulp.task('default', function(cb) {
-    gulpSequence('build', 'browser-sync', function() {
+    gulpSequence('build', function() {
       gulp.watch([srcFolder + '/images/**/*.*'], ['images']);
       gulp.watch([srcFolder + '/fonts/**/*.*'], ['fonts']);
       gulp.watch([srcFolder + '/styles/**/*.*'], ['build']);
