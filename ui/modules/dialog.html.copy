@@ -1,0 +1,84 @@
+<!----------------------------------------------------------------------------
+   Copyright IBM Corp. 2015
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+------------------------------------------------------------------------------>
+
+<section class="dialog-body-{{dialogCtrl.state.class}}">
+
+    <!-- The area where the conversation is displayed. This is the scrollable div as opposed to the body-->
+    <div class="dialog-scrollable-div" id="scrollable-div" ng-if="dialogCtrl.state.key !== 'intro'" resize>
+        <div class="container dialog-container-{{dialogCtrl.state.class}}">
+            <!--Include the conversation html if state is chatting. Conversation dom will be updated by additions
+                to the 'conversation' array which is stored in the controller-->
+            <div class="dialog-center dialog-center-{{dialogCtrl.state.class}}"
+                 ng-include="'modules/dialog-entries.html'"></div>
+        </div>
+    </div>
+
+    <!--footer, user entry field -->
+    <footer class="footer-{{dialogCtrl.state.class}}" id="dialog-footer">
+        <div class="container">
+            <form class="form" role="form" ng-submit="dialogCtrl.submit()">
+                <div class="form-group has-controls dialog-form-group-{{dialogCtrl.state.class}}">
+                    <div class="dialog-happy-text-{{dialogCtrl.state.class}}">
+                        <div id="introContainer">
+                            <div id="typing"> Hi, I'm the <br/><span> Watson Practitioner Assistant</span>.</div>
+                            <div id="typing"> I can answer your questions</div>
+                            <div id="typing"> about WEA and Watson Conversations</div>
+                        </div>
+                    </div>
+                    <table class="dialog-input-table" ng-class="{fadein : dialogCtrl.state.key == 'intro'}">
+                        <tr>
+                            <td class="dialog-input-col">
+                                <textarea id="question" class="dialog-form-input form-control"
+                                          type="text"
+                                          placeholder="{{dialogCtrl.state.placeholder}}"
+                                          ng-model="dialogCtrl.question" autocorrect="off"
+                                          autocomplete="off" autofocus="autofocus"
+                                ></textarea>
+                                <input id="submitbtn" type="submit"/>
+                            </td>
+                            <td class="dialog-resize-col" id="resize-footer-col">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </footer>
+    <!-- Footer with Terms/Conditions and Privacy -->
+    <div ng-if="dialogCtrl.state.key == 'chatting'" class="dialog-links-parent-chatting">
+        <div class="footer-container">
+            <div class="links-container">
+                <a class="dialog-link" href="./tos/index.html" target="_blank">Terms &amp; Conditions</a>
+                |
+                <a style="padding-left:.5vw" class="dialog-link" href="http://www.ibm.com/privacy/us/en/"
+                   target="_blank">Privacy</a>
+            </div>
+            <img src="images/powered-by-watson.png" style="float:right; width:143px;"></img>
+
+        </div>
+    </div>
+    <!-- If user presses enter key, will submit input -->
+    <script>
+        window.onload = function () {
+            $('#question').keypress(function (e) {
+                if (e.keyCode == 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    document.getElementById('submitbtn').click();
+                }
+            });
+        }
+    </script>
+</section>
