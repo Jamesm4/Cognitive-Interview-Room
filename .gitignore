@@ -6,7 +6,7 @@ coverage
 .env
 npm-debug.log
 .tmp/
-__MACOSX
+__MACOSX/
 public/
 .DS_Store
 package-lock.json
