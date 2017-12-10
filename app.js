@@ -248,6 +248,7 @@ demo.loop = function(){
 // demo endpoint
 // this simply starts a separate demo thread/function which will "mimic" the live input
 // change to post at the end and send a blank post request using javascript to activate demo
+// consider changing to use the sockets io.on thing instead.
 app.post('/demostart', function (req, res) {
 	if (demo.timer != null){
 		//alternately, this could be moved to the start of the loop function.
@@ -278,8 +279,14 @@ var socketIO = require('socket.io');
 var io = socketIO(server);
 
 io.on('connection', (socket) => {
-  console.log('Client connected');
-  socket.on('disconnect', () => console.log('Client disconnected'));
+	console.log('Client connected');
+	socket.on('disconnect', () => console.log('Client disconnected'));
+	
+	//check for response ping (test)
+	socket.on('response-ping', function() {
+		console.log('response-ping received');
+	});
 });
+
 
 //setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
