@@ -306,13 +306,10 @@ var our_tone_analyzer = function(scriptline){
 		// Save witness text to witness variable
 		//witness.push(scriptline);
 
-		//save the text
-		var thetext = scriptline.Text;
-		
 		// Feed it to tone_analyzer
 		tone_analyzer.tone(
 			{
-				tone_input: "this is a text statement",
+				text: scriptline.Text,
 				content_type: 'text/plain'
 			},
 			function(error, response) {
