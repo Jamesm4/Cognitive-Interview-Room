@@ -215,8 +215,7 @@ app.post('/api/message', function (req, res) {
 });
 
 // Begin demo section
-var moment = require('moment'); //Request moving this up?
-
+var moment = require('moment');
 var demo = {};
 //time between demo things
 demo.interval = 5000;
@@ -230,7 +229,7 @@ demo.loop = function(){
 	console.log("Sending demo line " + (demo.index+1));
 	
 	//insert timestamp
-	demo.script[demo.index].timestamp = moment().format('YYYY-MM-DD hh:mm:ssa');
+	demo.script[demo.index].Timestamp = moment().format('YYYY-MM-DD hh:mm:ssa');
 	
 	//send all the lines
 	console.log(demo.script[demo.index]);
@@ -239,7 +238,7 @@ demo.loop = function(){
 	if (demo.index < demo.length){
 		demo.timer = setTimeout(demo.loop, demo.interval);
 	} else{
-		//end it or something
+		//clear timers and finish
 		demo.timer = null;
 		console.log("Demo finished!");
 	}
@@ -247,7 +246,8 @@ demo.loop = function(){
 
 // demo endpoint
 // this simply starts a separate demo thread/function which will "mimic" the live input
-app.get('/demostart', function (req, res) {
+// change to post at the end and send a blank post request using javascript to activate demo
+app.post('/demostart', function (req, res) {
 	if (demo.timer != null){
 		//alternately, this could be moved to the start of the loop function.
 		clearTimeout(demo.timer);
