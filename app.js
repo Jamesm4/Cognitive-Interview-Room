@@ -268,6 +268,17 @@ require('./config/error-handler')(app);
 
 var port = process.env.PORT || 3000;
 //var host = process.env.VCAP_APP_HOST || 'localhost';
-app.listen(port);
+var server = app.listen(port);
 
 //console.log(pkg.name + ':' + pkg.version, host + ':' + port);
+
+//start websockets section
+var socketIO = require('socket.io');
+var io = socketIO(server);
+
+io.on('connection', (socket) => {
+  console.log('Client connected');
+  socket.on('disconnect', () => console.log('Client disconnected'));
+});
+
+setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
