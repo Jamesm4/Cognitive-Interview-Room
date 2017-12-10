@@ -1,0 +1,184 @@
+{
+	"script":[
+		{
+			"Text": "Can you tell me what happened?",
+			"Speaker": "I"
+		},
+		{
+			"Text": "Use as many details as you think are important.",
+			"Speaker": "I"
+		},
+		{
+			"Text": "I was asleep when it happened, something woke me up, but I wasn’t really sure what it was.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I looked at the clock, and it was around 2am.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I remember hearing rustling in my apartment.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I was very awake, but I was still telling myself that it was just the rain.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "Suddenly, I heard a knock on my wall.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "Startled, I realized that someone or something was in my apartment.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I jumped out of bed, and quickly scanned the room for something that I could use to defend myself.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I grabbed my cricket bat lying next to the door, crept out of my room, hoping that it was just my roomate coming home late.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I walked into the room and saw a the burglar at my TV.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "As soon as the burglar saw me, he sprinted to the door.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "Unsure if he was actually leaving, I followed him to the door, but much to my relief, he was gone.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I am going to make a few quick adjustments to replicate the behavior of the environment you were describing.",
+			"Speaker": "I"
+		},
+		{
+			"Text": "Watson it was raining out.",
+			"Speaker": "I"
+		},
+		{
+			"Text": "You used \"he\" when talking about the burglar, were you able to determine the gender of the burglar?",
+			"Speaker": "I"
+		},
+		{
+			"Text": "It was really dark in that room, but I was able to make out a little bit.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I’m pretty sure he was a man, no he was definitely a man.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "If he hadn’t run off, I would have given him a good smack, so he’d be easy to find.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "Was it as dark as it was in here?",
+			"Speaker": "I"
+		},
+		{
+			"Text": "It was a little darker.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "Watson make it darker.",
+			"Speaker": "I"
+		},
+		{
+			"Text": "Can you describe anything else you were able to see of the burglar?",
+			"Speaker": "I"
+		},
+		{
+			"Text": "Yeah it was pretty late, so none of the apartment lights were on.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I was still able to see some of the burglar, He was a man in all dark clothing, maybe 5 foot 10.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "It was hard to make out any facial features. He had a hoodie on like a punk.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "Actually, now that I think about it, there was one light on in the room.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "We had christmas lights bordering our window, and we left them on that night.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "They were on the far end of the room, so they didn’t help me see the burglar’s face, but I was able to see his outline pretty clearly.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "He was looking right at me too, if only I had a light.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I would have been able to see everything.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "You mentioned the burglar was looking at your TV.",
+			"Speaker": "I"
+		},
+		{
+			"Text": "What thoughts came to your mind when you saw the burglar doing this?",
+			"Speaker": "I"
+		},
+		{
+			"Text": "I remember feeling angry at this point.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I don’t know what else he had in his bag and didn’t want to lose anything else.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "He saw me with my bat at this point and started to flea.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I started to follow him with my bat in hand.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I should’ve took him out right there!",
+			"Speaker": "W"
+		},
+		{
+			"Text": "He had a bag?",
+			"Speaker": "I"
+		},
+		{
+			"Text": "Yes.. he had a backpack, I presume this is what he used to hold all the other things he took.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "You know who has a backpack?",
+			"Speaker": "W"
+		},
+		{
+			"Text": "My slimy neighbor Steve.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "He came over to hangout with my girlfriend last week and was commenting on how nice my TV was.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "I bet it was him.",
+			"Speaker": "W"
+		},
+		{
+			"Text": "Okay,  let’s take a small break.",
+			"Speaker": "I"
+		}
+	]
+}
