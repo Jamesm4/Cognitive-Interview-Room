@@ -233,6 +233,7 @@ demo.loop = function(){
 	
 	//send all the lines
 	console.log(demo.script[demo.index]);
+	io.emit("transcript", demo.script[demo.index]);
 	
 	demo.index++;
 	if (demo.index < demo.length){
@@ -281,4 +282,4 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
 
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
+//setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
