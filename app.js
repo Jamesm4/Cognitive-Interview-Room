@@ -21,7 +21,8 @@ var express = require('express'),
   pkg = require('./package.json'),
   Q = require('q'),
   fs = require('fs'),
-  watson = require('watson-developer-cloud');
+  watson = require('watson-developer-cloud'),
+  moment = require('moment');
 
 // Bootstrap application settings
 require('./config/express')(app);
@@ -29,9 +30,6 @@ require('./config/express')(app);
 var log = console.log.bind(null, '  ');
 var conversation;
 var tone_analyzer;
-// var discovery;
-var serviceCredentials;
-var intentConfidence;
 
 var allowCrossDomain = function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -47,8 +45,6 @@ app.use(allowCrossDomain);
 if (process.env.VCAP_SERVICES) {
   console.log("setting vcap services");
   var services = JSON.parse(process.env.VCAP_SERVICES);
-
-  serviceCredentials = null;
 
   conversation = new watson.ConversationV1({
     url: services.conversation[0].credentials.url || 'https://gateway.watsonplatform.net/conversation/api',
@@ -66,157 +62,65 @@ if (process.env.VCAP_SERVICES) {
     version: 'v3'
   });
 
-  /*
-  discovery = new watson.DiscoveryV1({
-    url: services.discovery[0].credentials.url || 'https://gateway.watsonplatform.net/discovery/api',
-    username: services.discovery[0].credentials.username || '<username>',
-    password: services.discovery[0].credentials.password || '<password>',
-    version_date: process.env.discovery_version
-  });
-  */
-
-  intentConfidence = process.env.intent_confidence;
-
 } else {
   // load the environment variables - for local testing
   if (fs.existsSync('./.env.js')) {
     Object.assign(process.env, require('./.env.js'));
   }
 
-  serviceCredentials = JSON.parse(process.env.VCAP_SERVICES);
+  var services = JSON.parse(process.env.VCAP_SERVICES);
 
   conversation = new watson.ConversationV1({
-    url: serviceCredentials.conversation[0].credentials.url || 'https://gateway.watsonplatform.net/conversation/api',
-    username: serviceCredentials.conversation[0].credentials.username || '<username>',
-    password: serviceCredentials.conversation[0].credentials.password || '<password>',
+    url: services.conversation[0].credentials.url || 'https://gateway.watsonplatform.net/conversation/api',
+    username: services.conversation[0].credentials.username || '<username>',
+    password: services.conversation[0].credentials.password || '<password>',
     version_date: process.env.conversation_version,
     version: 'v1'
   });
 
-  /*
   tone_analyzer = new watson.ToneAnalyzerV3({
-    url: serviceCredentials.tone_analyzer[0].credentials.url || 'https://gateway.watsonplatform.net/tone-analyzer/api',
-    username: serviceCredentials.tone_analyzer[0].credentials.username || '<username>',
+    url: services.tone_analyzer[0].credentials.url || 'https://gateway.watsonplatform.net/tone-analyzer/api',
+    username: services.tone_analyzer[0].credentials.username || '<username>',
     password: services.tone_analyzer[0].credentials.password || '<password>',
     version_date: process.env.tone_analyzer_version,
     version: 'v3'
   });
-  */
-
-  /*
-  discovery = new watson.DiscoveryV1({
-    url: serviceCredentials.discovery[0].credentials.url || 'https://gateway.watsonplatform.net/discovery/api',
-    username: serviceCredentials.discovery[0].credentials.username || '<username>',
-    password: serviceCredentials.discovery[0].credentials.password || '<password>',
-    version_date: process.env.discovery_version
-  });
-  */
-
-  intentConfidence = .75;
 }
 
-console.log("Confidence Threshold: " + intentConfidence);
+// error-handler application settings
+require('./config/error-handler')(app);
 
-// main endpoint
-var previousContext = null;
-app.post('/api/message', function (req, res) {
-  /*var workspace = process.env.workspace_id;
-  if (!workspace) {
-    return res.json({
-      'output': {
-        'text': 'The app has not been configured with a <b>WORKSPACE_ID</b> environment variable. Please refer to the ' +
-        '<a href="https://github.com/watson-developer-cloud/conversation-simple">README</a> documentation on how to set this variable. <br>' +
-        'Once a workspace has been defined the intents may be imported from ' +
-        '<a href="https://github.com/watson-developer-cloud/conversation-simple/blob/master/training/car_workspace.json">here</a> in order to get a working application.'
-      }
-    });
-  }
-  var payload = {
-    workspace_id: workspace,
-    context: {},
-    input: {}
-  };
+var port = process.env.PORT || 3000;
+var host = process.env.VCAP_APP_HOST || 'localhost';
+var server = app.listen(port);
 
-  if (req.body) {
-    if (req.body.input) {
-      payload.input = req.body.input;
-    }
-    if (req.body.context) {
-      // The client must maintain context/state
-      payload.context = req.body.context;
-    }
-  }
+console.log(pkg.name + ':' + pkg.version, host + ':' + port);
 
-  if (!payload.context) {
-    payload.context = previousContext;
-  }
+//start websockets section
+var socketIO = require('socket.io');
+var io = socketIO(server);
 
-  (function () {
-    var deferred = Q.defer();
-    conversation.message(payload, function (err, data) {
-      if (err) {
-        console.log("ERROR");
-        console.log(err);
-        return res.status(err.code || 500).json(err);
-      }
-
-      deferred.resolve(data);
-    })
-    return deferred.promise;
-
-  })().then(function (data) {
-
-    return res.json(data);
-
-    /*
-    if (data.input.text !== "start conversation" && data.intents.length > 0 && data.intents[0].confidence < intentConfidence) {
-      // return discovery data
-      var response = {
-        "input": {"text": req.body.input.text},
-        "context": data.context,
-        "output": {"text": []}
-      };
-
-      var version_date = process.env.discovery_version;
-      var environment_id = process.env.environment_id;
-      var collection_id = process.env.collection_id;
-
-      discovery.query({
-          version_date: version_date,
-          environment_id: environment_id,
-          collection_id: collection_id,
-          query: req.body.input.text,
-          count: 5
-        },
-        (err, data) => {
-          if (err) {
-            console.log("Error: ");
-            console.log(err);
-            return res.status(err.code || 500).json(err);
-          }
-
-          if (data.results.length > 0) {
-            for(var i = 0; i < data.results.length; i++) {
-              response.output.text.push(data.results[i]); // keep this use-case agnostic;
-            }
-          } else {
-            response.output.text.push("I cannot find an answer to your question.");
-          }
-
-          return res.json(response);
-        }
-      );
-    } else {
-      // return conversation data
-      return res.json(data);
-    }
-    */
-	res.send("something");
-  //});
+io.on('connection', (socket) => {
+	console.log('Client connected');
+	socket.on('disconnect', () => console.log('Client disconnected'));
+	
+	// demo endpoint
+	// this simply starts a separate demo thread/function which will "mimic" the live input
+	socket.on('demostart', () => {
+		if (demo.timer != null){
+			//alternately, this could be moved to the start of the loop function.
+			clearTimeout(demo.timer);
+			demo.timer = null;
+			console.log("Restarting demo... Settings: ");
+		} else
+			console.log("Starting demo... Settings: ");
+		console.log("Initial Delay: " + (demo.initialdelay/1000) + "s\tDelay between lines: " + (demo.interval/1000) + "s");
+		demo.index = 0;
+		demo.timer = setTimeout(demo.loop, demo.initialdelay);
+	});
 });
 
 // Begin demo section
-var moment = require('moment');
 var demo = {};
 //time between demo things
 demo.interval = 5000;
@@ -233,10 +137,9 @@ demo.loop = function(){
 	demo.script[demo.index].Timestamp = moment().format('YYYY-MM-DD hh:mm:ssa');
 	
 	//send all the lines
-	console.log(demo.script[demo.index]);
-	//var converstionresult = conversation(demo.script[demo.inY
-	io.emit("transcript", demo.script[demo.index]);
-	our_tone_analyzer(demo.script[demo.index]);
+	var tones = analyzeTones(demo.script[demo.index]);
+	var conversation = conversationCode(demo.script[demo.index]);
+	combineOutputs(demo.script[demo.index], tones, conversation);
 	
 	demo.index++;
 	if (demo.index < demo.length){
@@ -248,59 +151,8 @@ demo.loop = function(){
 	}
 };
 
-// demo endpoint
-// this simply starts a separate demo thread/function which will "mimic" the live input
-// change to post at the end and send a blank post request using javascript to activate demo
-// consider changing to use the sockets io.on thing instead.
-app.post('/demostart', function (req, res) {
-	if (demo.timer != null){
-		//alternately, this could be moved to the start of the loop function.
-		clearTimeout(demo.timer);
-		demo.timer = null;
-		console.log("Restarting demo...");
-	} else
-		console.log("Starting demo...");
-	console.log("Settings: ");
-	console.log("Initial Delay: " + (demo.initialdelay/1000) + "s\tDelay between lines: " + (demo.interval/1000) + "s");
-	demo.index = 0;
-	demo.timer = setTimeout(demo.loop, demo.initialdelay);
-	res.end();
-});
-//end demo section
-
-// error-handler application settings
-require('./config/error-handler')(app);
-
-var port = process.env.PORT || 3000;
-//var host = process.env.VCAP_APP_HOST || 'localhost';
-var server = app.listen(port);
-
-//console.log(pkg.name + ':' + pkg.version, host + ':' + port);
-
-//start websockets section
-var socketIO = require('socket.io');
-var io = socketIO(server);
-
-io.on('connection', (socket) => {
-	console.log('Client connected');
-	socket.on('disconnect', () => console.log('Client disconnected'));
-	
-	//check for response ping (test)
-	socket.on('response-ping', function() {
-		console.log('response-ping received');
-	});
-});
-
-
-//tone-analyzer
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
-var tone_analyzer = new ToneAnalyzerV3({
-	username: '3f147bcc-4713-4f89-be4f-f9a0e0ebf888',
-	password: 'zNjlU3tQXYkc',
-	version_date: '2017-09-21'
-});
-
-var our_tone_analyzer = function(scriptline){
+// tone analyzer
+var analyzeTones = function(scriptline){
 	// Extract witness speech
 	if (scriptline.Speaker == 'W') {		
 		// Save witness text to witness variable
@@ -315,15 +167,37 @@ var our_tone_analyzer = function(scriptline){
 			function(error, response) {
 				if (error) {
 					console.log('error:', error);
+					return null;
 				}
 				else {
 					//output.push(response);
 					//console.log(JSON.stringify(response, null, 2));
-					io.emit("tone", response);
+					//io.emit("tone", response);
+					return response;
 				}
 			}
 		);
-	}
+	} return null;
 }
 
-//setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
+// Conversation code
+var conversationCode = function(scriptline){
+	return null;
+}
+
+// Combine the outputs
+var combineOutputs = function(transcript, tones, conversation){
+	// hack it
+	var output = JSON.parse(JSON.stringify(transcript));
+	output.watson = {};
+	
+	if (tones != null)
+		output.watson.tones = tones;
+	
+	if (conversation != null) 
+		output.watson.conversation = conversation;
+	
+	io.emit("output", output);
+	//LOG IT!
+	console.log(JSON.stringify(output));
+}

@@ -52,14 +52,15 @@
 			+ line.Text;
 			socket.emit('response-ping');
 		});
-		socket.on('tone', function(stuff) {
+		socket.on('output', function(stuff) {
 		console.log(stuff);
 		});
 		//This part could've been written using sockets probably...
 		(function(){
-			var xhr = new XMLHttpRequest();
+			/*var xhr = new XMLHttpRequest();
 			xhr.open("POST", "./demostart", true);
-			xhr.send();
+			xhr.send();*/
+			socket.emit('demostart');
 		}());
     </script>
     <img src="images/powered-by-watson.png" style="width: 143px;"></img>
