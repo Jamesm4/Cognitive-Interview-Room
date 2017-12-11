@@ -120,7 +120,7 @@ console.log("Confidence Threshold: " + intentConfidence);
 // main endpoint
 var previousContext = null;
 app.post('/api/message', function (req, res) {
-  var workspace = process.env.workspace_id;
+  /*var workspace = process.env.workspace_id;
   if (!workspace) {
     return res.json({
       'output': {
@@ -211,7 +211,8 @@ app.post('/api/message', function (req, res) {
       return res.json(data);
     }
     */
-  });
+	res.send("something");
+  //});
 });
 
 // Begin demo section
@@ -233,7 +234,9 @@ demo.loop = function(){
 	
 	//send all the lines
 	console.log(demo.script[demo.index]);
+	//var converstionresult = conversation(demo.script[demo.inY
 	io.emit("transcript", demo.script[demo.index]);
+	our_tone_analyzer(demo.script[demo.index]);
 	
 	demo.index++;
 	if (demo.index < demo.length){
@@ -288,5 +291,39 @@ io.on('connection', (socket) => {
 	});
 });
 
+
+//tone-analyzer
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+var tone_analyzer = new ToneAnalyzerV3({
+	username: '3f147bcc-4713-4f89-be4f-f9a0e0ebf888',
+	password: 'zNjlU3tQXYkc',
+	version_date: '2017-09-21'
+});
+
+var our_tone_analyzer = function(scriptline){
+	// Extract witness speech
+	if (scriptline.Speaker == 'W') {		
+		// Save witness text to witness variable
+		//witness.push(scriptline);
+
+		// Feed it to tone_analyzer
+		tone_analyzer.tone(
+			{
+				text: scriptline.Text,
+				content_type: 'text/plain'
+			},
+			function(error, response) {
+				if (error) {
+					console.log('error:', error);
+				}
+				else {
+					//output.push(response);
+					//console.log(JSON.stringify(response, null, 2));
+					io.emit("tone", response);
+				}
+			}
+		);
+	}
+}
 
 //setInterval(() => io.emit('time', new Date().toTimeString()), 1000);

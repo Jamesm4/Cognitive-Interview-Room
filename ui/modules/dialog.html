@@ -39,16 +39,21 @@
   <div class="bottom">
 
     <p style="margin-left: 1em;">Developed by Halley Fede, Marshall James, Adam Li, Zach Biletch, and Prasanna Date</p>
-    <p id='random-test'></p>
+	<p id='random-tone'></p>
+	<p id='random-test'></p>
     <script src="/socket.io/socket.io.js"></script>
     <script>
 		var socket = io();
 		var el = document.getElementById('random-test');
+		//var el2 = document.getElementById('random-tone');
 		socket.on('transcript', function(line) {
 		el.innerHTML = line.Timestamp + " - "
 			+ (line.Speaker === "W" ? "Witness: " : "Interviewer : ")
 			+ line.Text;
 			socket.emit('response-ping');
+		});
+		socket.on('tone', function(stuff) {
+		console.log(stuff);
 		});
 		//This part could've been written using sockets probably...
 		(function(){
