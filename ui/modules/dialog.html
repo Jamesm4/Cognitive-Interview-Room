@@ -39,6 +39,24 @@
   <div class="bottom">
 
     <p style="margin-left: 1em;">Developed by Halley Fede, Marshall James, Adam Li, Zach Biletch, and Prasanna Date</p>
+    <p id='random-test'></p>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+		var socket = io();
+		var el = document.getElementById('random-test');
+		socket.on('transcript', function(line) {
+		el.innerHTML = line.Timestamp + " - "
+			+ (line.Speaker === "W" ? "Witness: " : "Interviewer : ")
+			+ line.Text;
+			socket.emit('response-ping');
+		});
+		//This part could've been written using sockets probably...
+		(function(){
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "./demostart", true);
+			xhr.send();
+		}());
+    </script>
     <img src="images/powered-by-watson.png" style="width: 143px;"></img>
 
   </div>
