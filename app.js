@@ -22,7 +22,8 @@ var express = require('express'),
   Q = require('q'),
   fs = require('fs'),
   watson = require('watson-developer-cloud'),
-  moment = require('moment');
+  moment = require('moment'),
+  socketIO = require('socket.io');;
 
 // Bootstrap application settings
 require('./config/express')(app);
@@ -96,25 +97,36 @@ var server = app.listen(port);
 
 console.log(pkg.name + ':' + pkg.version, host + ':' + port);
 
-//start websockets section
-var socketIO = require('socket.io');
+/*******************************
+*                              *
+*  start main server section!  *
+*                              *
+*******************************/
 var io = socketIO(server);
 
 io.on('connection', (socket) => {
 	console.log('Client connected');
-	socket.on('disconnect', () => console.log('Client disconnected'));
+	socket.on('disconnect', () => {
+		console.log('Client disconnected');
+		if (demo.timer != null){
+			console.log("Killing demo.");
+			clearTimeout(demo.timer);
+			demo.timer = null;
+		}
+	});
 	
 	// demo endpoint
 	// this simply starts a separate demo thread/function which will "mimic" the live input
 	socket.on('demostart', () => {
 		if (demo.timer != null){
 			//alternately, this could be moved to the start of the loop function.
+			console.log("Restarting demo... Settings: ");
 			clearTimeout(demo.timer);
 			demo.timer = null;
-			console.log("Restarting demo... Settings: ");
 		} else
 			console.log("Starting demo... Settings: ");
-		console.log("Initial Delay: " + (demo.initialdelay/1000) + "s\tDelay between lines: " + (demo.interval/1000) + "s");
+		console.log("Initial Delay: " + (demo.initialdelay/1000)
+			+ "s\tDelay between lines: " + (demo.interval/1000) + "s");
 		demo.index = 0;
 		demo.timer = setTimeout(demo.loop, demo.initialdelay);
 	});
@@ -136,10 +148,10 @@ demo.loop = function(){
 	//insert timestamp
 	demo.script[demo.index].Timestamp = moment().format('YYYY-MM-DD hh:mm:ssa');
 	
-	//send all the lines
-	var tones = analyzeTones(demo.script[demo.index]);
-	var conversation = conversationCode(demo.script[demo.index]);
-	combineOutputs(demo.script[demo.index], tones, conversation);
+	//Do all the actions
+	analyzeTones(demo.script[demo.index]);
+	conversationCode(demo.script[demo.index]);
+	output.transcriptCallback(demo.script[demo.index]);
 	
 	demo.index++;
 	if (demo.index < demo.length){
@@ -154,10 +166,8 @@ demo.loop = function(){
 // tone analyzer
 var analyzeTones = function(scriptline){
 	// Extract witness speech
-	if (scriptline.Speaker == 'W') {		
-		// Save witness text to witness variable
-		//witness.push(scriptline);
-
+	if (scriptline.Speaker == 'W') {
+		
 		// Feed it to tone_analyzer
 		tone_analyzer.tone(
 			{
@@ -167,37 +177,73 @@ var analyzeTones = function(scriptline){
 			function(error, response) {
 				if (error) {
 					console.log('error:', error);
-					return null;
+					output.tonesCallback(null);
 				}
 				else {
-					//output.push(response);
-					//console.log(JSON.stringify(response, null, 2));
-					//io.emit("tone", response);
-					return response;
+					output.tonesCallback(response);
 				}
 			}
 		);
-	} return null;
+	} //Send null callback if not witness text 
+	else output.tonesCallback(null);
 }
 
 // Conversation code
 var conversationCode = function(scriptline){
-	return null;
+	setTimeout(()=>{output.conversationCallback(null);}, 80);
 }
 
-// Combine the outputs
-var combineOutputs = function(transcript, tones, conversation){
-	// hack it
-	var output = JSON.parse(JSON.stringify(transcript));
-	output.watson = {};
-	
+//Handle the outputs
+//this probably could be a bit better...
+//overlaps would definately be an issue... (fixed by using an arraylist instead)
+var output = {};
+output.tonesFlag = false;
+output.transcriptFlag = false;
+output.conversationFlag = false;
+output.tones = null;
+output.transcript = null;
+output.conversation = null;
+
+//callback functions
+output.transcriptCallback = function(transcript){
+	if (transcript != null)
+		output.transcript = JSON.parse(JSON.stringify(transcript));
+	output.transcriptFlag = true;
+	output.tryOutput();
+}
+output.tonesCallback = function(tones){
 	if (tones != null)
-		output.watson.tones = tones;
-	
-	if (conversation != null) 
-		output.watson.conversation = conversation;
-	
-	io.emit("output", output);
-	//LOG IT!
-	console.log(JSON.stringify(output));
+		output.tones = JSON.parse(JSON.stringify(tones));
+	output.tonesFlag = true;
+	output.tryOutput();
+}
+output.conversationCallback = function(conversation){
+	if (conversation != null)
+		output.conversation = JSON.parse(JSON.stringify(conversation));
+	output.conversationFlag = true;
+	output.tryOutput();
+}
+
+//try the outputs
+output.tryOutput = function(){
+	//If this doesn't work, then try again another day!
+	if (output.tonesFlag && output.transcriptFlag && output.conversationFlag){
+		var out = output.transcript;
+		
+		out.watson = {};
+		out.watson.tones = output.tones;
+		out.watson.conversation = output.conversation;
+		
+		io.emit("output", out);
+		//LOG IT!
+		console.log(JSON.stringify(out, null, 2));
+		
+		//reset everything
+		output.tonesFlag = false;
+		output.transcriptFlag = false;
+		output.conversationFlag = false;
+		output.tones = null;
+		output.transcript = null;
+		output.conversation = null;
+	}
 }
