@@ -29,6 +29,19 @@
       <div class="transcript-wrapper">
 
         <h2>Live Transcript</h2>
+		<!-- Just test stuff -->
+		<pre id='random-test'></pre>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io();
+			var el = document.getElementById('random-test');
+			socket.on('output', function(message) {
+				el.innerHTML = JSON.stringify(message, null, 2);
+				console.log(message);
+			});
+		</script>
+		<input type="submit" value="Start Demo" onclick="socket.emit('demostart');document.getElementById('random-test').innerHTML='';">
+		<!-- end test stuff -->
 
       </div>
 
