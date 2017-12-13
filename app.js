@@ -236,7 +236,7 @@ output.tryOutput = function(){
 		
 		io.emit("output", out);
 		//LOG IT!
-		console.log(JSON.stringify(out, null, 2));
+		// console.log(JSON.stringify(out, null, 2));
 		
 		//reset everything
 		output.tonesFlag = false;
