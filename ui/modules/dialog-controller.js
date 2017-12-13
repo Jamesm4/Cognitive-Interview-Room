@@ -47,6 +47,13 @@
         $('div.transcript').append(html);
 
         if(msg.watson.tones !== null) updateTones(msg.watson.tones.document_tone.tones);
+
+        if(msg.watson.conversation !== null) {
+
+          var conversation = msg.watson.conversation;
+          console.log(conversation);
+
+        }
       });
 
     };
