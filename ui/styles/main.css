@@ -105,6 +105,19 @@ svg#tone-analysis {
 
 }
 
+text {
+
+  fill: #272727;
+
+}
+
+line {
+
+  stroke: #272727;
+  stroke-width: 2;
+
+}
+
 div.transcript-wrapper {
 
   width: calc(100% - 2em);
