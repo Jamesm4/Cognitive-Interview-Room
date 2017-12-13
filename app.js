@@ -217,7 +217,7 @@ var conversationCode = function(scriptline){
 		conversation.message({
 			workspace_id: process.env.workspace_id,
 				context: conversationContext,
-			input: {'text': scriptline.Text}
+			input: {'text': scriptline.Speaker + ": " + scriptline.Text}
 		}, function(error, response) {
 			if (error) {
 				console.log('error:', error);
