@@ -24,6 +24,10 @@
             console.log("Starting demo!");
             socket.emit('demostart');
           });
+
+        $("input#cisl").click(function() {
+          alert("Not currently connected to CISL. Try the demo button!");
+        });
       });
 
       socket.on('output', function(msg) {
