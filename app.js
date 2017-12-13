@@ -212,28 +212,24 @@ var analyzeTones = function(scriptline){
 
 // Conversation code
 var conversationCode = function(scriptline){
-	//extract interviewer
-	if (scriptline.Speaker == "I"){
-		conversation.message({
-			workspace_id: process.env.workspace_id,
-				context: conversationContext,
-			input: {'text': scriptline.Speaker + ": " + scriptline.Text}
-		}, function(error, response) {
-			if (error) {
-				console.log('error:', error);
-				output.conversationCallback(null);
+	conversation.message({
+		workspace_id: process.env.workspace_id,
+			context: conversationContext,
+		input: {'text': scriptline.Speaker + ": " + scriptline.Text}
+	}, function(error, response) {
+		if (error) {
+			console.log('error:', error);
+			output.conversationCallback(null);
+		}
+		else {
+			if (response.context.Brightness != null){
+				cisl.brightness(response.context.Brightness);
+			}if (response.context.Sound != null){
+				cisl.sounds(response.context.Sound);
 			}
-			else {
-				if (response.context.Brightness != null){
-					cisl.brightness(response.context.Brightness);
-				}if (response.context.Sound != null){
-					cisl.sounds(response.context.Sound);
-				}
-				output.conversationCallback(response);
-			}
-		});
-	} //Send null callback if not witness text 
-	else output.conversationCallback(null);
+			output.conversationCallback(response);
+		}
+	});
 }
 
 //Handle the outputs

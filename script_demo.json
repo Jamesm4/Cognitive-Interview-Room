@@ -5,7 +5,7 @@
 			"Speaker": "I"
 		},
 		{
-			"Text": "Use as many details as you think are important.",
+			"Text": "What do you remember?",
 			"Speaker": "I"
 		},
 		{
@@ -109,6 +109,10 @@
 			"Speaker": "W"
 		},
 		{
+			"Text": "It seems like you remember a lot of physical detail for such a dark room, again are you sure you remember that much detail?",
+			"Speaker": "I"
+		},
+		{
 			"Text": "Actually, now that I think about it, there was one light on in the room.",
 			"Speaker": "W"
 		},
@@ -129,7 +133,7 @@
 			"Speaker": "W"
 		},
 		{
-			"Text": "You mentioned the burglar was looking at your TV.",
+			"Text": "You mentioned the burglar was looking at  your TV.",
 			"Speaker": "I"
 		},
 		{
@@ -161,7 +165,7 @@
 			"Speaker": "I"
 		},
 		{
-			"Text": "Yes.. he had a backpack, I presume this is what he used to hold all the other things he took.",
+			"Text": "Yes... he had a backpack, I presume this is what he used to hold all the other things he took.",
 			"Speaker": "W"
 		},
 		{
