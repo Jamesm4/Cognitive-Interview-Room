@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
 	console.log('Client connected');
 	socket.on('disconnect', () => {
 		console.log('Client disconnected');
-		if (demo.timer != null && --connections <= 0){
+		if (demo.timer != null && (--connections) <= 0){
 			connections = 0;
 			console.log("Killing demo.");
 			clearTimeout(demo.timer);
@@ -224,6 +224,11 @@ var conversationCode = function(scriptline){
 				output.conversationCallback(null);
 			}
 			else {
+				if (response.context.Brightness != null){
+					cisl.brightness(response.context.Brightness);
+				}if (response.context.Sound != null){
+					cisl.sounds(response.context.Sound);
+				}
 				output.conversationCallback(response);
 			}
 		});
@@ -284,4 +289,18 @@ output.tryOutput = function(){
 		output.transcript = null;
 		output.conversation = null;
 	}
+}
+
+//Cisl stuff...
+var cisl = {};
+cisl.brightness = function(brightness){
+	if (brightness < 0){
+		console.log("Making room darker");
+	}if (brightness > 0){
+		console.log("Making room brigher");
+	}
+}
+cisl.sounds = function(sound){
+	if (sound === "off") return;
+	console.log("Playing sound: " + sound);
 }
