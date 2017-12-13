@@ -97,6 +97,14 @@ div.tone-wrapper {
 
 }
 
+svg#tone-analysis {
+
+  width: 100%;
+  height: 100%;
+  background-color: #e3ecec;
+
+}
+
 div.transcript-wrapper {
 
   width: calc(100% - 2em);

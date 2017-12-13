@@ -28,6 +28,9 @@
         $("input#cisl").click(function() {
           alert("Not currently connected to CISL. Try the demo button!");
         });
+
+        createToneAnalysis();
+
       });
 
       socket.on('output', function(msg) {
@@ -57,4 +60,12 @@
             });
         })
         .controller('DialogController', DialogController);
+
+    var createToneAnalysis = function() {
+
+      console.log("Creating tone analysis.");
+
+      var svg = d3.select("svg#tone-analysis");
+
+    }
 }());
