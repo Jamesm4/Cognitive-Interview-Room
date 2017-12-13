@@ -5,7 +5,7 @@ module.exports = {
             credentials: {
                 url: "https://gateway.watsonplatform.net/conversation/api",
                 username: "c105ac99-af5d-494a-b4bf-97e5c53aa1fa",
-                password: "lvnwj51dqqjx"
+                password: "lVNWj51DqqjX"
             }
         }],
         tone_analyzer: [{

@@ -103,12 +103,17 @@ console.log(pkg.name + ':' + pkg.version, host + ':' + port);
 *                              *
 *******************************/
 var io = socketIO(server);
+// store a persistent ID for the conversation agent.
+var conversationContext = null;
 
+var connections = 0;
 io.on('connection', (socket) => {
+	connections++;
 	console.log('Client connected');
 	socket.on('disconnect', () => {
 		console.log('Client disconnected');
-		if (demo.timer != null){
+		if (demo.timer != null && --connections <= 0){
+			connections = 0;
 			console.log("Killing demo.");
 			clearTimeout(demo.timer);
 			demo.timer = null;
@@ -127,8 +132,7 @@ io.on('connection', (socket) => {
 			console.log("Starting demo... Settings: ");
 		console.log("Initial Delay: " + (demo.initialdelay/1000)
 			+ "s\tDelay between lines: " + (demo.interval/1000) + "s");
-		demo.index = 0;
-		demo.timer = setTimeout(demo.loop, demo.initialdelay);
+		demo.initialize();
 	});
 });
 
@@ -142,6 +146,24 @@ demo.script = demo.jsonfile.script;
 demo.length = demo.script.length;
 demo.index = 0;
 demo.timer = null;
+demo.initialize = function(){
+	demo.index = 0;
+	conversationContext = null;
+	//initialize the conversation agent
+	conversation.message({
+		workspace_id: process.env.workspace_id,
+	}, function(error, response) {
+		if (error) {
+			console.log('error:', error);
+			console.log('Demo failed to start!');
+		}
+		else {
+			console.log('Demo started');
+			conversationContext = response.context;
+			demo.timer = setTimeout(demo.loop, demo.initialdelay);
+		}
+	});
+}
 demo.loop = function(){
 	console.log("Sending demo line " + (demo.index+1));
 	
@@ -190,7 +212,23 @@ var analyzeTones = function(scriptline){
 
 // Conversation code
 var conversationCode = function(scriptline){
-	setTimeout(()=>{output.conversationCallback(null);}, 80);
+	//extract interviewer
+	if (scriptline.Speaker == "I"){
+		conversation.message({
+			workspace_id: process.env.workspace_id,
+				context: conversationContext,
+			input: {'text': scriptline.Text}
+		}, function(error, response) {
+			if (error) {
+				console.log('error:', error);
+				output.conversationCallback(null);
+			}
+			else {
+				output.conversationCallback(response);
+			}
+		});
+	} //Send null callback if not witness text 
+	else output.conversationCallback(null);
 }
 
 //Handle the outputs
