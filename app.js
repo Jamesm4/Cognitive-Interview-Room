@@ -222,6 +222,7 @@ var conversationCode = function(scriptline){
 			output.conversationCallback(null);
 		}
 		else {
+                        conversationContext = response.context;
 			if (response.context.Brightness != null){
 				cisl.brightness(response.context.Brightness);
 			}if (response.context.Sound != null){

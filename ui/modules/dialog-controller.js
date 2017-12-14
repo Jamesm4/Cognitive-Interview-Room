@@ -22,6 +22,10 @@
       var updateTones;
 
       $(document).ready(function() {
+
+
+        $("div.suggest-wrapper").width($("div.tone-wrapper").width());
+
         $("input#demo").click(function() {
             console.log("Starting demo!");
             socket.emit('demostart');
@@ -52,6 +56,8 @@
 
           var conversation = msg.watson.conversation;
           console.log(conversation);
+
+          $("span#watson-text").html(conversation.output.text[0]);
 
         }
       });
