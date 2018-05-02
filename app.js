@@ -23,14 +23,15 @@ var express = require('express'),
   fs = require('fs'),
   watson = require('watson-developer-cloud'),
   moment = require('moment'),
-  socketIO = require('socket.io');;
+  socketIO = require('socket.io'),
+  request = require('request');
 
 // Bootstrap application settings
 require('./config/express')(app);
 
 var log = console.log.bind(null, '  ');
 var conversation;
-var tone_analyzer;
+// var tone_analyzer;
 
 var allowCrossDomain = function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -55,6 +56,7 @@ if (process.env.VCAP_SERVICES) {
     version: 'v1'
   });
 
+  /*
   tone_analyzer = new watson.ToneAnalyzerV3({
     url: services.tone_analyzer[0].credentials.url || 'https://gateway.watsonplatform.net/tone-analyzer/api',
     username: services.tone_analyzer[0].credentials.username || '<username>',
@@ -62,6 +64,7 @@ if (process.env.VCAP_SERVICES) {
     version_date: process.env.tone_analyzer_version,
     version: 'v3'
   });
+  */
 
 } else {
   // load the environment variables - for local testing
@@ -79,6 +82,7 @@ if (process.env.VCAP_SERVICES) {
     version: 'v1'
   });
 
+  /*
   tone_analyzer = new watson.ToneAnalyzerV3({
     url: services.tone_analyzer[0].credentials.url || 'https://gateway.watsonplatform.net/tone-analyzer/api',
     username: services.tone_analyzer[0].credentials.username || '<username>',
@@ -86,6 +90,7 @@ if (process.env.VCAP_SERVICES) {
     version_date: process.env.tone_analyzer_version,
     version: 'v3'
   });
+  */
 }
 
 // error-handler application settings
@@ -187,9 +192,26 @@ demo.loop = function(){
 
 // tone analyzer
 var analyzeTones = function(scriptline){
+	// console.log(scriptline);
 	// Extract witness speech
 	if (scriptline.Speaker == 'W') {
 		
+		request({
+			uri: "http://localhost:5000/sentiments",
+			method: "POST",
+			form: { text: scriptline["Text"] }
+		},
+		function(error, response, body) {
+			if (error) {
+				console.log('error:', error);
+				output.tonesCallback(null);
+			}
+			else {
+				output.tonesCallback(body);
+			}
+
+		});
+		/*
 		// Feed it to tone_analyzer
 		tone_analyzer.tone(
 			{
@@ -206,6 +228,7 @@ var analyzeTones = function(scriptline){
 				}
 			}
 		);
+		*/
 	} //Send null callback if not witness text 
 	else output.tonesCallback(null);
 }

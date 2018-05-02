@@ -50,12 +50,12 @@
         var html = `<p style="margin-bottom: 0.25em;">[${timestamp}] <span class="${sclass}">(${speaker})</span>: ${msg.Text}</p>`;
         $('div.transcript').append(html);
 
-        if(msg.watson.tones !== null) updateTones(msg.watson.tones.document_tone.tones);
+        if(msg.watson.tones !== null) updateTones(msg.watson.tones);
 
         if(msg.watson.conversation !== null) {
 
           var conversation = msg.watson.conversation;
-          console.log(conversation);
+          // console.log(conversation);
 
           $("span#watson-text").html(conversation.output.text[0]);
 
@@ -159,20 +159,20 @@
 
       var updateTones = function(tones) {
 
-        // console.log(tones);
+        tones = JSON.parse(tones).sentiments;
+        tones = tones.map(function(x) {
+          var em = Object.keys(x)[0];
+          return {
+            tone_id: em,
+            tone_name: em[0].toUpperCase() + em.substring(1),
+            score: x[em]
+          };
+        });
 
         barWrap.selectAll('*').remove();
 
         var color = d3.scaleOrdinal(d3.schemeCategory20)
-          .domain([
-            "fear",
-            "tentative",
-            "analytical",
-            "sadness",
-            "anger",
-            "joy",
-            "confident"
-          ]);
+          .domain(["disgust", "sadness", "guilt", "joy", "anger", "fear", "shame"]);
 
         var y = d3.scaleLinear()
           .domain([0, 1])

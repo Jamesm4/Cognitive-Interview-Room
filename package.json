@@ -68,7 +68,7 @@
     "moment": "^2.11.1",
     "object.pick": "^1.2.0",
     "q": "^1.4.1",
-    "request": "^2.69.0",
+    "request": "^2.85.0",
     "run-sequence": "^1.1.5",
     "string": "^3.3.3",
     "trim": "0.0.1",
